@@ -5,7 +5,6 @@ public class Task {
         this.description = description;
     }
 
-    // Shortened as requested
     public String getDesc() {
         return description;
     }
