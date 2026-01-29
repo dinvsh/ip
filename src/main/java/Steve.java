@@ -18,7 +18,6 @@ public class Steve {
             if (input.equals("bye")) {
                 break;
             } else if (input.equals("list")) {
-                // We build the list into an array of strings first
                 System.out.println(HORIZONTAL_LINE);
                 System.out.println(" here's your stuff cuh:");
                 for (int i = 0; i < taskCount; i++) {
@@ -67,7 +66,6 @@ public class Steve {
                 }
 
             } else {
-                // Add Task
                 if (input.trim().isEmpty()) {
                     printBordered("you gotta type something cuh, cant add air");
                 } else {
@@ -82,7 +80,6 @@ public class Steve {
         scanner.close();
     }
 
-    // --- HELPER METHOD ---
     private static void printBordered(String... messages) {
         System.out.println(HORIZONTAL_LINE);
         for (String msg : messages) {
