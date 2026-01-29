@@ -7,7 +7,7 @@ public class Task {
         this.isDone = false;
     }
 
-    public String getDesc() {
+    public String getDescription() {
         return description;
     }
 
@@ -15,7 +15,6 @@ public class Task {
         return (isDone ? "X" : " ");
     }
 
-    // New methods for Level-3
     public void mark() {
         this.isDone = true;
     }
