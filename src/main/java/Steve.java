@@ -18,7 +18,7 @@ public class Steve {
     private static final String MSG_GOODBYE = "see you next time dawg";
     private static final String MSG_LIST_HEADER = " here's your stuff cuh:";
     private static final String MSG_TASK_ADDED = "gotchu i added this task:";
-    private static final String MSG_TASK_COUNT = "now you got %d tasks in the list"; // <--- FIXED
+    private static final String MSG_TASK_COUNT = "now you got %d tasks in the list";
     private static final String MSG_MARKED = "aight i marked it done:";
     private static final String MSG_UNMARKED = "ok i unmarked it:";
 
@@ -215,7 +215,7 @@ public class Steve {
         printBordered(
                 MSG_TASK_ADDED,
                 "  " + t.toString(),
-                String.format(MSG_TASK_COUNT, taskCount) // <--- Clean usage of %d
+                String.format(MSG_TASK_COUNT, taskCount)
         );
     }
 
