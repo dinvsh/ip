@@ -1,3 +1,5 @@
+package steve;
+
 public class Messages {
     private Messages() {}
 
