@@ -1,8 +1,8 @@
 package steve;
 
-public class Steve {
-    private static final int MAX_TASKS = 100;
+import java.util.ArrayList;
 
+public class Steve {
     private static final String CMD_BYE = "bye";
     private static final String CMD_LIST = "list";
     private static final String CMD_MARK = "mark";
@@ -10,9 +10,9 @@ public class Steve {
     private static final String CMD_TODO = "todo";
     private static final String CMD_DEADLINE = "deadline";
     private static final String CMD_EVENT = "event";
+    private static final String CMD_DELETE = "delete";
 
-    private static Task[] tasks = new Task[MAX_TASKS];
-    private static int taskCount = 0;
+    private static ArrayList<Task> tasks = new ArrayList<>();
 
     private static Ui ui;
 
@@ -35,16 +35,20 @@ public class Steve {
                     printList();
                     break;
                 case CMD_MARK:
-                    int mIdx = Parser.parseIndex(input, CMD_MARK, taskCount);
-                    if (tasks[mIdx].isDone()) throw new SteveException(Messages.ERR_ALREADY_MARKED);
-                    tasks[mIdx].mark();
-                    ui.printBordered(Messages.MARKED, "  " + tasks[mIdx]);
+                    int mIdx = Parser.parseIndex(input, CMD_MARK, tasks.size());
+                    if (tasks.get(mIdx).isDone()) throw new SteveException(Messages.ERR_ALREADY_MARKED);
+                    tasks.get(mIdx).mark();
+                    ui.printBordered(Messages.MARKED, "  " + tasks.get(mIdx));
                     break;
                 case CMD_UNMARK:
-                    int uIdx = Parser.parseIndex(input, CMD_UNMARK, taskCount);
-                    if (!tasks[uIdx].isDone()) throw new SteveException(Messages.ERR_NOT_MARKED);
-                    tasks[uIdx].unmark();
-                    ui.printBordered(Messages.UNMARKED, "  " + tasks[uIdx]);
+                    int uIdx = Parser.parseIndex(input, CMD_UNMARK, tasks.size());
+                    if (!tasks.get(uIdx).isDone()) throw new SteveException(Messages.ERR_NOT_MARKED);
+                    tasks.get(uIdx).unmark();
+                    ui.printBordered(Messages.UNMARKED, "  " + tasks.get(uIdx));
+                    break;
+                case CMD_DELETE:
+                    int dIdx = Parser.parseIndex(input, CMD_DELETE, tasks.size());
+                    deleteTask(dIdx);
                     break;
                 case CMD_TODO:
                     String tDesc = Parser.parseTodo(input);
@@ -69,15 +73,20 @@ public class Steve {
     }
 
     private static void addTask(Task t) {
-        tasks[taskCount++] = t;
-        ui.printBordered(Messages.TASK_ADDED, "  " + t, String.format(Messages.TASK_COUNT, taskCount));
+        tasks.add(t);;
+        ui.printBordered(Messages.TASK_ADDED, "  " + t, String.format(Messages.TASK_COUNT, tasks.size()));
+    }
+
+    private static void deleteTask(int index) {
+        Task removedTask = tasks.remove(index);
+        ui.printBordered(Messages.TASK_REMOVED, "  " + removedTask, String.format(Messages.TASK_COUNT, tasks.size()));
     }
 
     private static void printList() {
         ui.showLine();
         System.out.println(Messages.LIST_HEADER);
-        for (int i = 0; i < taskCount; i++) {
-            System.out.println(" " + (i + 1) + "." + tasks[i]);
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println(" " + (i + 1) + "." + tasks.get(i));
         }
         ui.showLine();
     }

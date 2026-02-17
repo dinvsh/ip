@@ -11,6 +11,7 @@ public class Messages {
     public static final String TASK_COUNT = "now you got %d tasks in the list";
     public static final String MARKED = "aight i marked it done:";
     public static final String UNMARKED = "ok i unmarked it:";
+    public static final String TASK_REMOVED = "aight i removed this task:";
     public static final String HORIZONTAL_LINE = "____________________________________________________________";
 
     public static final String ERR_SYSTEM_PREFIX = "uh oh: ";
