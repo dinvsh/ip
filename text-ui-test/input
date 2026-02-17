@@ -18,4 +18,5 @@ event meeting /from
 event meeting /from 2pm /to
 blahblah
 list
+delete 2
 bye
