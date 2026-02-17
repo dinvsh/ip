@@ -9,7 +9,6 @@ import java.util.Scanner;
 
 public class Steve {
     private static final String FILE_PATH = "data/steve.txt";
-    private static final int MAX_TASKS = 100;
 
     private static final String CMD_BYE = "bye";
     private static final String CMD_LIST = "list";
@@ -84,7 +83,7 @@ public class Steve {
     }
 
     private static void addTask(Task t) {
-        tasks.add(t);;
+        tasks.add(t);
         ui.printBordered(Messages.TASK_ADDED, "  " + t, String.format(Messages.TASK_COUNT, tasks.size()));
         saveTasks();
     }
@@ -92,6 +91,7 @@ public class Steve {
     private static void deleteTask(int index) {
         Task removedTask = tasks.remove(index);
         ui.printBordered(Messages.TASK_REMOVED, "  " + removedTask, String.format(Messages.TASK_COUNT, tasks.size()));
+        saveTasks();
     }
 
     private static void printList() {
@@ -113,8 +113,8 @@ public class Steve {
 
             // Write all tasks to the file
             FileWriter fw = new FileWriter(FILE_PATH);
-            for (int i = 0; i < taskCount; i++) {
-                fw.write(tasks[i].toFileString() + System.lineSeparator());
+            for (int i = 0; i < tasks.size(); i++) {
+                fw.write(tasks.get(i).toFileString() + System.lineSeparator());
             }
             fw.close();
         } catch (IOException e) {
@@ -152,18 +152,18 @@ public class Steve {
                         t = new Event(desc, parts[3], parts[4]);
                     }
 
-                    if (t != null && taskCount < 100) {
+                    if (t != null) {
                         if (isDone) t.mark();
-                        tasks[taskCount++] = t;
+                        tasks.add(t);
                     }
                 } catch (Exception e) {
-                    System.out.println("Skipping corrupted data line: " + line);
+                    System.out.println("skipping corrupted data line: " + line);
                 }
             }
             scanner.close();
 
         } catch (Exception e) {
-            System.out.println("Error reading the hard drive.");
+            System.out.println("error reading the hard drive.");
         }
     }
 }
