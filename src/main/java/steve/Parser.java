@@ -2,6 +2,13 @@ package steve;
 
 public class Parser {
 
+    public static String parseFind(String input) throws SteveException {
+        if (input.length() <= 5 || input.substring(4).trim().isEmpty()) {
+            throw new SteveException(Messages.ERR_EMPTY_FIND);
+        }
+        return input.substring(5).trim();
+    }
+
     public static int parseIndex(String input, String commandType, int taskCount) throws SteveException {
         String[] parts = input.split(" ");
         if (parts.length < 2) {

@@ -12,6 +12,7 @@ public class Messages {
     public static final String MARKED = "aight i marked it done:";
     public static final String UNMARKED = "ok i unmarked it:";
     public static final String TASK_REMOVED = "aight i removed this task:";
+    public static final String FIND_HEADER = " here are the matching tasks in your list cuh:";
     public static final String HORIZONTAL_LINE = "____________________________________________________________";
 
     public static final String ERR_SYSTEM_PREFIX = "uh oh: ";
@@ -29,4 +30,6 @@ public class Messages {
     public static final String ERR_START_AFTER_END = "bro u gotta put /from before /to";
     public static final String ERR_MISSING_START_DATE = "bro u gotta tell me when it starts";
     public static final String ERR_MISSING_END_DATE = "bro u gotta tell me when it ends";
+    public static final String ERR_EMPTY_FIND = "bro u gotta tell me what to find";
+    public static final String ERR_BAD_DATE_FORMAT = "bro those dates ain't right. use yyyy-mm-dd format cuh.";
 }

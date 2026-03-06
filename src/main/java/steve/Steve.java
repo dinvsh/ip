@@ -65,6 +65,10 @@ public class Steve {
                     String[] eParts = Parser.parseEvent(input);
                     addTask(new Event(eParts[0], eParts[1], eParts[2]));
                     break;
+                case "find":
+                    String keyword = Parser.parseFind(input);
+                    printFoundTasks(keyword);
+                    break;
                 default:
                     throw new SteveException(Messages.ERR_UNKNOWN_CMD);
                 }
@@ -90,6 +94,20 @@ public class Steve {
         System.out.println(Messages.LIST_HEADER);
         for (int i = 0; i < tasks.getSize(); i++) {
             System.out.println(" " + (i + 1) + "." + tasks.getTask(i));
+        }
+        ui.showLine();
+    }
+
+    private void printFoundTasks(String keyword) {
+        ui.showLine();
+        System.out.println(Messages.FIND_HEADER);
+        int count = 1;
+        for (int i = 0; i < tasks.getSize(); i++) {
+            Task t = tasks.getTask(i);
+            if (t.getDescription().contains(keyword)) {
+                System.out.println(" " + count + "." + t);
+                count++;
+            }
         }
         ui.showLine();
     }
