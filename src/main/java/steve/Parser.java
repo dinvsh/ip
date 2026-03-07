@@ -1,7 +1,20 @@
 package steve;
 
+/**
+ * Deals with making sense of user commands.
+ * Parses raw input strings into actionable data or indices,
+ * throwing descriptive {@link SteveException}s for malformed input.
+ * All methods are static.
+ */
 public class Parser {
 
+    /**
+     * Parses a {@code find} command and returns the search keyword.
+     *
+     * @param input The full raw user input (e.g., {@code find book}).
+     * @return The trimmed keyword string to search for.
+     * @throws SteveException If no keyword is provided after {@code find}.
+     */
     public static String parseFind(String input) throws SteveException {
         if (input.length() <= 5 || input.substring(4).trim().isEmpty()) {
             throw new SteveException(Messages.ERR_EMPTY_FIND);
@@ -9,6 +22,16 @@ public class Parser {
         return input.substring(5).trim();
     }
 
+    /**
+     * Parses the user input to extract a task index.
+     *
+     * @param input       The raw user input string (e.g., {@code mark 2}).
+     * @param commandType The type of command (e.g., {@code "mark"}, {@code "delete"})
+     *                    used in error messages.
+     * @param taskCount   The current number of tasks in the list, used to validate bounds.
+     * @return The zero-based index of the task.
+     * @throws SteveException If the index is missing, not a number, or out of bounds.
+     */
     public static int parseIndex(String input, String commandType, int taskCount) throws SteveException {
         String[] parts = input.split(" ");
         if (parts.length < 2) {
@@ -25,6 +48,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a {@code todo} command and returns the task description.
+     *
+     * @param input The full raw user input (e.g., {@code todo buy groceries}).
+     * @return The trimmed task description.
+     * @throws SteveException If no description is provided.
+     */
     public static String parseTodo(String input) throws SteveException {
         if (input.length() <= 4) {
             throw new SteveException(Messages.ERR_EMPTY_DESC);
@@ -36,6 +66,14 @@ public class Parser {
         return desc;
     }
 
+    /**
+     * Parses a {@code deadline} command and returns its components.
+     *
+     * @param input The full raw user input
+     *              (e.g., {@code deadline submit report /by 2025-12-31}).
+     * @return A two-element array: {@code [description, byDate]}.
+     * @throws SteveException If the description or {@code /by} date is missing or malformed.
+     */
     public static String[] parseDeadline(String input) throws SteveException {
         int byIndex = input.indexOf("/by");
         if (byIndex == -1) throw new SteveException(Messages.ERR_MISSING_BY);
@@ -51,6 +89,14 @@ public class Parser {
         return new String[]{desc, by};
     }
 
+    /**
+     * Parses an {@code event} command and returns its components.
+     *
+     * @param input The full raw user input
+     *              (e.g., {@code event orientation /from 2025-08-01 /to 2025-08-03}).
+     * @return A three-element array: {@code [description, fromDate, toDate]}.
+     * @throws SteveException If any component is missing or {@code /from} appears after {@code /to}.
+     */
     public static String[] parseEvent(String input) throws SteveException {
         int fromIndex = input.indexOf("/from");
         int toIndex = input.indexOf("/to");
