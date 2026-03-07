@@ -6,13 +6,33 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles loading and saving tasks to and from disk.
+ * Tasks are stored in a plain-text file using a pipe-delimited format.
+ * Each line represents one task. Corrupted lines are skipped with a warning.
+ * The data directory is created automatically if it does not exist.
+ */
 public class Storage {
     private String filePath;
 
+    /**
+     * Constructs a Storage instance pointing to the given file path.
+     *
+     * @param filePath The path to the file where tasks are persisted
+     *                 (e.g., {@code "data/steve.txt"}).
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads and returns the list of tasks from disk.
+     * If the file does not exist, returns an empty list. Lines that cannot
+     * be parsed are skipped with a warning message printed to stdout.
+     *
+     * @return An {@link ArrayList} of tasks read from the file.
+     * @throws SteveException If the file exists but cannot be read.
+     */
     public ArrayList<Task> load() throws SteveException {
         ArrayList<Task> loadedTasks = new ArrayList<>();
         try {
@@ -55,6 +75,13 @@ public class Storage {
         return loadedTasks;
     }
 
+    /**
+     * Saves the current list of tasks to the file on disk.
+     * Creates the {@code data} directory if it does not already exist.
+     *
+     * @param tasks The list of tasks to save.
+     * @throws SteveException If there is an error writing to the file.
+     */
     public void save(ArrayList<Task> tasks) throws SteveException {
         try {
             File dir = new File("data");
